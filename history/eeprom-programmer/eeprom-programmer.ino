@@ -124,14 +124,14 @@ void setup() {
   pinMode(A4_PIN, OUTPUT);                          // Set A4 (pin 11) as output for page select bit 0
   pinMode(A7_PIN, OUTPUT);                          // Set A7 (pin 12) as output for page select bit 1
 
-  pinMode(IO0_PIN, INPUT);                          // Set IO0 as input (data bit 0)
-  pinMode(IO1_PIN, INPUT);                          // Set IO1 as input (data bit 1)
-  pinMode(IO2_PIN, INPUT);                          // Set IO2 as input (data bit 2)
-  pinMode(IO3_PIN, INPUT);                          // Set IO3 as input (data bit 3)
-  pinMode(IO4_PIN, INPUT);                          // Set IO4 as input (data bit 4)
-  pinMode(IO5_PIN, INPUT);                          // Set IO5 as input (data bit 5)
-  pinMode(IO6_PIN, INPUT);                          // Set IO6 as input (data bit 6)
-  pinMode(IO7_PIN, INPUT);                          // Set IO7 as input (data bit 7)
+  pinMode(IO0_PIN, OUTPUT);                         // Set IO0 as output (data bit 0)
+  pinMode(IO1_PIN, OUTPUT);                         // Set IO1 as output (data bit 1)
+  pinMode(IO2_PIN, OUTPUT);                         // Set IO2 as output (data bit 2)
+  pinMode(IO3_PIN, OUTPUT);                         // Set IO3 as output (data bit 3)
+  pinMode(IO4_PIN, OUTPUT);                         // Set IO4 as output (data bit 4)
+  pinMode(IO5_PIN, OUTPUT);                         // Set IO5 as output (data bit 5)
+  pinMode(IO6_PIN, OUTPUT);                         // Set IO6 as output (data bit 6)
+  pinMode(IO7_PIN, OUTPUT);                         // Set IO7 as output (data bit 7)
 
   pinMode(WE_PIN, OUTPUT);                          // Set Write Enable as output
   digitalWrite(WE_PIN, HIGH);                       // Disable EEPROM writing (WE inactive = HIGH)
