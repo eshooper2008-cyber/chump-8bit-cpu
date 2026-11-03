@@ -1,0 +1,8 @@
+# Gowin IDE build output and project state
+impl/
+*.gprj.user
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
