@@ -13,8 +13,36 @@ I first built the 4-bit CHUMP on breadboards from 74LS-series chips, two EEPROMs
 - An exact Verilog model of the **74181 ALU**, with all 16 logic and 16 arithmetic functions, the same chip used on the breadboard.
 - **One flag for both jumps:** GOTO and IFZERO share the ALU's `A=B` output (see [How jumps work](#how-jumps-work)).
 - Five [example programs](programs/README.md), from a running light to multiplication and Fibonacci, each shown as machine code, plain English, a flowchart and an LED picture.
+- Third version of the CHUMP I've built, after a [breadboard version and a 4-layer surface-mount PCB](#where-it-started-the-4-bit-chump).
 
 <br clear="right"/>
+
+---
+
+## Where it started: the 4-bit CHUMP
+
+CHUMP-8 is the third version of this computer I've built:
+
+**1. Breadboard (4-bit).** I built the original from 74LS-series logic chips across several breadboards: a 74LS161 program counter, a 74LS181 ALU, a 74189 RAM, a 74LS377 accumulator, and two AT28C16 EEPROMs, one for the program and one for the control signals. A 555 timer provided the clock.
+
+**2. EEPROM programmer.** To load the EEPROMs, I built an Arduino Nano programmer ([`history/eeprom-programmer`](history/eeprom-programmer/eeprom-programmer.ino)). It sets the address and data pins with bit shifting, then pulses write-enable low for each byte.
+
+<img src="docs/images/eeprom_programmer.jpg" width="420" alt="Arduino Nano EEPROM programmer on a breadboard, wired to an AT28C16">
+
+The breadboard design asked for each instruction to be shown as two hex digits on a pair of 7-segment displays. My teacher mentioned that nobody had ever driven both digits from a **single** EEPROM, so I worked out how:
+- A **555 timer at about 4.8 kHz** flips one EEPROM address pin, so the EEPROM alternates between a "left digit" page and a "right digit" page.
+- The same 555 signal switches the two displays' common cathodes, with one going through a transistor inverter, so only the matching display is on at each moment.
+- The switching is far too fast to see (persistence of vision), so both digits look lit at once.
+
+The data in the programmer is the machine code of my first CHUMP program, which adds three numbers: `04 62 02 63 08 64 82 10 83 30 84 30 65 CD`. A switch on another address pin selects a second program.
+
+**3. Four-layer surface-mount PCB.** Next I redrew the whole breadboard computer as a 4-layer PCB in EasyEDA, using surface-mount versions of every chip: nearly **400 nets in under 50 cm²**. The autorouter ran for most of a day. I hand-soldered every chip with hot air to keep the cost down, and the board worked on the first try, apart from a couple of easy fixes.
+
+| 4-layer routing | Hand-soldered SMD parts |
+|:---:|:---:|
+| <img src="docs/images/chump_smd_pcb_layout.jpg" width="330" alt="Dense 4-layer PCB routing of the CHUMP in EasyEDA"> | <img src="docs/images/chump_smd_closeup.jpg" width="330" alt="Close-up of a hand-soldered SOT-23 transistor on the CHUMP PCB"> |
+
+**4. FPGA (8-bit):** this repo. Every chip became a Verilog module, and every bus was doubled to 8 bits.
 
 ---
 
@@ -178,6 +206,8 @@ The Tang Nano 9K doesn't have enough free pins for every signal, so `Program_OUT
 ├── programs/
 │   ├── README.md           # the example programs explained
 │   └── verilog/            # each example as a drop-in PROGRAM_EEPROM.v
+├── history/
+│   └── eeprom-programmer/  # Arduino code that programmed the 4-bit CHUMP's EEPROMs
 └── docs/images/
 ```
 
